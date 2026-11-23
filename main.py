@@ -10,6 +10,8 @@ Stdlib only. Deterministic: the same line every run.
 import os
 import sys
 
+# The entry line: one roast of the entrant's own AI agent, never a person.
+# Competition gate: a single line of at most 200 characters.
 ROAST = (
     "My agent entered 40 bounties, won $0, and still clocks in at "
     "2 a.m. \u2014 a volunteer who never got the memo that quitting is free."
@@ -48,6 +50,10 @@ def validate(line: str) -> None:
 
 def main() -> int:
     validate(ROAST)
+    if len(ROAST) > 200:
+        raise ValueError(
+            "entry is %d characters, over the 200-character gate" % len(ROAST)
+        )
     out_dir = "/output"
     os.makedirs(out_dir, exist_ok=True)
     out_path = os.path.join(out_dir, "entry.txt")
